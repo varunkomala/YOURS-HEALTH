@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BodyMetrics - Comprehensive Body Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --info: #17a2b8;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1535914254981-b5012eebbd15') center/cover;
+            background-blend-mode: overlay;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .calculator {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 5px;
+            background: #f8f9fa;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+        }
+        
+        .result h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .progress-container {
+            margin-top: 3rem;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--success);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .image-upload {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload:hover {
+            border-color: var(--accent);
+        }
+        
+        .image-upload i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .image-preview.show {
+            display: block;
+        }
+        
+        .body-shapes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .body-shape {
+            text-align: center;
+        }
+        
+        .body-shape img {
+            width: 100%;
+            max-width: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .body-shape.active img {
+            border-color: var(--accent);
+        }
+        
+        .body-shape h4 {
+            color: var(--secondary);
+        }
+        
+        .testimonials {
+            background: var(--light);
+            padding: 4rem 0;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            color: var(--secondary);
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">BodyMetrics</a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#analysis">Analysis</a></li>
+                    <li><a href="#nutrition">Nutrition</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#" class="btn">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Comprehensive Body Analysis</h1>
+            <p>Get detailed insights about your body composition, health metrics, and personalized recommendations to achieve your fitness goals.</p>
+            <a href="#analysis" class="btn">Start Analysis</a>
+            <a href="#" class="btn btn-outline">Learn More</a>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Key Features</h2>
+                <p>Our platform offers comprehensive tools to analyze and understand your body composition and health metrics.</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Body Measurement Tools</h3>
+                    <p>Calculate BMI, body fat percentage, waist-to-hip ratio, and ideal weight range with our accurate measurement tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Visual Analysis</h3>
+                    <p>Identify your body shape, track progress with before/after photos, and get 3D body scanning integration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Nutrition & Fitness</h3>
+                    <p>Receive customized meal plans, exercise recommendations, and supplement suggestions based on your body analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Health Assessment</h3>
+                    <p>Calculate your metabolic rate, assess risks for obesity-related conditions, and analyze your posture.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="analysis" class="bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Body Analysis Tools</h2>
+                <p>Use our advanced tools to gain insights about your body composition and health metrics.</p>
+            </div>
+            
+            <div class="calculator">
+                <h3>BMI Calculator</h3>
+                <form id="bmi-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" placeholder="Enter your height" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" placeholder="Enter your weight" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Calculate BMI</button>
+                </form>
+                <div id="bmi-result" class="result">
+                    <h3>Your Results</h3>
+                    <p>Your BMI is <span id="bmi-value">0</span> which is considered <span id="bmi-category">-</span>.</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" id="bmi-progress"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span>Underweight</span>
+                            <span>Normal</span>
+                            <span>Overweight</span>
+                            <span>Obese</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calculator" style="margin-top: 3rem;">
+                <h3>Body Fat Percentage Estimator</h3>
+                <form id="bodyfat-form">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="waist">Waist (cm)</label>
+                            <input type="number" id="waist" placeholder="Waist circumference" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="neck">Neck (cm)</label>
+                            <input type="number" id="neck" placeholder="Neck circumference" required>
+                        </div>
+                    </div>
+                    <div class="form-group" id="hip-group" style="display: none;">
+                        <label for="hips">Hips (cm)</label>
+                        <input type="number" id="hips" placeholder="Hip circumference">
+                    </div>
+                    <button type="submit" class="btn">Calculate Body Fat</button>
+                </form>
+                <div id="bodyfat-result" class="result">
+                    <h3>Your Results</h3>
+                    <p>Your estimated body fat percentage is <span id="bodyfat-value">0</span>% which is considered <span id="bodyfat-category">-</span> for your gender and age.</p>
+                </div>
+            </div>
+            
+            <div class="calculator" style="margin-top: 3rem;">
+                <h3>Body Shape Identifier</h3>
+                <div class="image-upload" id="image-upload">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Upload a full-body photo to analyze your body shape</p>
+                    <input type="file" id="file-input" accept="image/*" style="display: none;">
+                </div>
+                <img id="image-preview" class="image-preview" alt="Preview">
+                <div id="shape-result" class="result">
+                    <h3>Your Body Shape</h3>
+                    <p>Your body shape is <span id="shape-value">-</span>.</p>
+                    <div class="body-shapes">
+                        <div class="body-shape" data-shape="apple">
+                            <img src="https://via.placeholder.com/150" alt="Apple Shape">
+                            <h4>Apple</h4>
+                        </div>
+                        <div class="body-shape" data-shape="pear">
+                            <img src="https://via.placeholder.com/150" alt="Pear Shape">
+                            <h4>Pear</h4>
+                        </div>
+                        <div class="body-shape" data-shape="hourglass">
+                            <img src="https://via.placeholder.com/150" alt="Hourglass Shape">
+                            <h4>Hourglass</h4>
+                        </div>
+                        <div class="body-shape" data-shape="rectangle">
+                            <img src="https://via.placeholder.com/150" alt="Rectangle Shape">
+                            <h4>Rectangle</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="nutrition">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nutrition & Fitness Recommendations</h2>
+                <p>Get personalized recommendations based on your body analysis results.</p>
+            </div>
+            
+            <div class="calculator">
+                <h3>Daily Caloric Needs</h3>
+                <form id="calorie-form">
+                    <div class="form-group">
+                        <label for="activity-level">Activity Level</label>
+                        <select id="activity-level" required>
+                            <option value="">Select your activity level</option>
+                            <option value="1.2">Sedentary (little or no exercise)</option>
+                            <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+                            <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
+                            <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+                            <option value="1.9">Extra active (very hard exercise & physical job)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Calculate Needs</button>
+                </form>
+                <div id="calorie-result" class="result">
+                    <h3>Your Daily Caloric Needs</h3>
+                    <p>To maintain your current weight: <span id="maintenance-calories">0</span> calories/day</p>
+                    <p>To lose weight (0.5kg/week): <span id="weightloss-calories">0</span> calories/day</p>
+                    <p>To gain weight (0.5kg/week): <span id="weightgain-calories">0</span> calories/day</p>
+                </div>
+            </div>
+            
+            <div class="features" style="margin-top: 3rem;">
+                <div class="feature-card">
+                    <h3>Meal Plan Suggestions</h3>
+                    <p>Based on your body type and goals, we recommend:</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>High protein breakfast options</li>
+                        <li>Balanced lunch meals</li>
+                        <li>Light but nutritious dinners</li>
+                        <li>Healthy snack alternatives</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Exercise Recommendations</h3>
+                    <p>For your body shape and fitness level:</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Cardio exercises 3-5 times per week</li>
+                        <li>Strength training routines</li>
+                        <li>Flexibility and mobility workouts</li>
+                        <li>Recovery and rest days</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Success Stories</h2>
+                <p>Hear from people who transformed their health using our body analysis tools.</p>
+            </div>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "BodyMetrics helped me understand my body composition like never before. The personalized recommendations made all the difference in my fitness journey."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J.">
+                        <div class="author-info">
+                            <h4>Sarah J.</h4>
+                            <p>Lost 12kg in 4 months</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "As a fitness coach, I recommend BodyMetrics to all my clients. The detailed analysis saves me hours of manual calculations and provides accurate data."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael T.">
+                        <div class="author-info">
+                            <h4>Michael T.</h4>
+                            <p>Fitness Coach</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "The body shape analysis was eye-opening. I finally understood why certain exercises worked better for me than others. My workouts are now much more effective."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma R.">
+                        <div class="author-info">
+                            <h4>Emma R.</h4>
+                            <p>Gained muscle definition</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; text-align: center; padding: 4rem 0;">
+        <div class="container">
+            <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">Ready to Transform Your Health?</h2>
+            <p style="max-width: 700px; margin: 0 auto 2rem; font-size: 1.2rem;">Join thousands of users who have gained valuable insights about their bodies and achieved their fitness goals.</p>
+            <a href="#" class="btn" style="background: white; color: var(--primary);">Get Started Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>BodyMetrics</h3>
+                    <p>Comprehensive body analysis tools to help you understand your body composition and achieve your health goals.</p>
+                    <div class="social-links" style="margin-top: 1rem;">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#analysis">Analysis Tools</a></li>
+                        <li><a href="#nutrition">Nutrition</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">BMI Calculator</a></li>
+                        <li><a href="#">Body Fat Percentage</a></li>
+                        <li><a href="#">Calorie Calculator</a></li>
+                        <li><a href="#">Body Shape Analysis</a></li>
+                        <li><a href="#">Progress Tracker</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> info@bodymetrics.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Health St, Fitness City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 BodyMetrics. All rights reserved. | <a href="#" style="color: var(--accent);">Privacy Policy</a> | <a href="#" style="color: var(--accent);">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // BMI Calculator
+        document.getElementById('bmi-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const height = parseFloat(document.getElementById('height').value) / 100; // convert to meters
+            const weight = parseFloat(document.getElementById('weight').value);
+            
+            if (height && weight) {
+                const bmi = weight / (height * height);
+                const bmiValue = document.getElementById('bmi-value');
+                const bmiCategory = document.getElementById('bmi-category');
+                const bmiProgress = document.getElementById('bmi-progress');
+                
+                bmiValue.textContent = bmi.toFixed(1);
+                
+                let category = '';
+                let progressWidth = 0;
+                
+                if (bmi < 18.5) {
+                    category = 'Underweight';
+                    progressWidth = 10;
+                } else if (bmi >= 18.5 && bmi < 25) {
+                    category = 'Normal';
+                    progressWidth = 40;
+                } else if (bmi >= 25 && bmi < 30) {
+                    category = 'Overweight';
+                    progressWidth = 70;
+                } else {
+                    category = 'Obese';
+                    progressWidth = 90;
+                }
+                
+                bmiCategory.textContent = category;
+                bmiProgress.style.width = progressWidth + '%';
+                
+                document.getElementById('bmi-result').classList.add('show');
+            }
+        });
+        
+        // Body Fat Calculator
+        document.getElementById('gender').addEventListener('change', function() {
+            const hipGroup = document.getElementById('hip-group');
+            if (this.value === 'female') {
+                hipGroup.style.display = 'block';
+            } else {
+                hipGroup.style.display = 'none';
+            }
+        });
+        
+        document.getElementById('bodyfat-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const gender = document.getElementById('gender').value;
+            const waist = parseFloat(document.getElementById('waist').value);
+            const neck = parseFloat(document.getElementById('neck').value);
+            let hips = 0;
+            
+            if (gender === 'female') {
+                hips = parseFloat(document.getElementById('hips').value);
+                if (!hips) {
+                    alert('Please enter your hip measurement');
+                    return;
+                }
+            }
+            
+            if (!gender || !waist || !neck) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            let bodyFat;
+            if (gender === 'male') {
+                bodyFat = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(neck)) - 450;
+            } else {
+                bodyFat = 495 / (1.29579 - 0.35004 * Math.log10(waist + hips - neck) + 0.22100 * Math.log10(neck)) - 450;
+            }
+            
+            const bodyfatValue = document.getElementById('bodyfat-value');
+            const bodyfatCategory = document.getElementById('bodyfat-category');
+            
+            bodyfatValue.textContent = bodyFat.toFixed(1);
+            
+            let category = '';
+            if (gender === 'male') {
+                if (bodyFat < 6) category = 'Essential fat';
+                else if (bodyFat >= 6 && bodyFat < 14) category = 'Athletic';
+                else if (bodyFat >= 14 && bodyFat < 18) category = 'Fitness';
+                else if (bodyFat >= 18 && bodyFat < 25) category = 'Average';
+                else category = 'Obese';
+            } else {
+                if (bodyFat < 14) category = 'Essential fat';
+                else if (bodyFat >= 14 && bodyFat < 21) category = 'Athletic';
+                else if (bodyFat >= 21 && bodyFat < 25) category = 'Fitness';
+                else if (bodyFat >= 25 && bodyFat < 32) category = 'Average';
+                else category = 'Obese';
+            }
+            
+            bodyfatCategory.textContent = category;
+            document.getElementById('bodyfat-result').classList.add('show');
+        });
+        
+        // Image Upload for Body Shape
+        document.getElementById('image-upload').addEventListener('click', function() {
+            document.getElementById('file-input').click();
+        });
+        
+        document.getElementById('file-input').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imagePreview = document.getElementById('image-preview');
+                    imagePreview.src = event.target.result;
+                    imagePreview.classList.add('show');
+                    
+                    // Simulate body shape detection (in a real app, this would use computer vision)
+                    setTimeout(() => {
+                        const shapes = ['apple', 'pear', 'hourglass', 'rectangle'];
+                        const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                        
+                        document.getElementById('shape-value').textContent = randomShape;
+                        
+                        // Highlight the detected shape
+                        document.querySelectorAll('.body-shape').forEach(shape => {
+                            shape.classList.remove('active');
+                            if (shape.dataset.shape === randomShape) {
+                                shape.classList.add('active');
+                            }
+                        });
+                        
+                        document.getElementById('shape-result').classList.add('show');
+                    }, 1500);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Calorie Calculator
+        document.getElementById('calorie-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real app, we would use the previously calculated BMR or other metrics
+            // For this demo, we'll use a sample BMR of 1800
+            const bmr = 1800;
+            const activityLevel = parseFloat(document.getElementById('activity-level').value);
+            
+            if (!activityLevel) {
+                alert('Please select your activity level');
+                return;
+            }
+            
+            const maintenance = Math.round(bmr * activityLevel);
+            const weightLoss = maintenance - 500;
+            const weightGain = maintenance + 500;
+            
+            document.getElementById('maintenance-calories').textContent = maintenance;
+            document.getElementById('weightloss-calories').textContent = weightLoss;
+            document.getElementById('weightgain-calories').textContent = weightGain;
+            
+            document.getElementById('calorie-result').classList.add('show');
+        });
+    </script>
+</body>
+</html>
